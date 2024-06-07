@@ -8,9 +8,36 @@ Precise phase voltage information is crucial for the efficient and accurate cont
 
 ## Dataset
 
-The dataset captures the mean phase voltages for each PWM interval along with other relevant signals across the complete operating range of an exemplary drive system. It is publicly available and intended for use in training and validating the ANN models.
+The dataset captures the mean phase voltages for each PWM interval along with other relevant signals across the complete operating range of an exemplary drive system. It is publicly available and can be downloaded from [Kaggle](https://www.kaggle.com/datasets/stender/inverter-data-set/data).
+
+## Repository Structure
+
+- `main.m`: MATLAB script that includes data preprocessing, model training, evaluation, and visualization of results.
 
 ## Requirements
 
-- MATLAB (R2023b or later)
+- MATLAB (R2020b or later)
 - Deep Learning Toolbox
+
+## Getting Started
+
+1. Clone the repository:
+    ```bash
+    git clone https://github.com/yourusername/DataDriven-IGBT-Inverter-Modeling.git
+    ```
+
+2. Navigate to the repository directory:
+    ```bash
+    cd DataDriven-IGBT-Inverter-Modeling
+    ```
+
+3. Download the dataset from [Kaggle](https://www.kaggle.com/datasets/stender/inverter-data-set/data) and place it in the `data/` directory.
+
+4. Open MATLAB and set the repository directory as the current folder.
+
+## Usage
+
+Run the `main.m` script to perform data preprocessing, model training, evaluation, and visualization.
+
+```matlab
+run('main.m')
