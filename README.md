@@ -1,6 +1,7 @@
 # DataDriven-IGBT-Inverter-Modeling
 
 This repository contains the code and dataset for the paper **"Data-Driven Modeling of Three-Phase IGBT Two-Level Inverter for Electrical Drives using ANNs"**. The project uses MATLAB to develop and train Artificial Neural Networks (ANNs) to model a three-phase IGBT two-level inverter for electrical drives.
+
 ![architecture](https://github.com/Shengwei0516/DataDriven-IGBT-Inverter-Modeling/blob/main/imgs/Inverter_circuit_diagram.png)
 
 ## Overview
