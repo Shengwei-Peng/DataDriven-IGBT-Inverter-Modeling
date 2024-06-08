@@ -3,14 +3,23 @@ clear;
 clc;
 rng(11207330);
 
-data = readtable('data.csv', 'VariableNamingRule', 'preserve');
+% Data Preparation
+fileName = 'Inverter Data Set.csv';
+if isfile(fileName)
+    data = readtable(fileName, 'VariableNamingRule', 'preserve');
+else
+    error('File not found.');
+end
+
 disp('First few rows of the data:');
 head(data)
+
 disp('Summary statistics of the data:');
 summary(data)
 
 disp('Missing values in each column:');
 disp(sum(ismissing(data)))
+
 data = fillmissing(data, 'linear');
 
 inputs = data{:, {'d_a_k-3', 'd_b_k-3', 'd_c_k-3', ...
@@ -22,19 +31,21 @@ targets = data{:, {'u_a_k-1', 'u_b_k-1', 'u_c_k-1'}}';
 
 [inputsNorm, inputSettings] = mapminmax(inputs);
 
+% Train-Validation-Test Split
 trainRatio = 0.7;
 valRatio = 0.15;
 testRatio = 0.15;
 [trainInd, valInd, testInd] = dividerand(size(inputsNorm, 2), trainRatio, valRatio, testRatio);
+
 trainInputs = inputsNorm(:, trainInd);
 trainTargets = targets(:, trainInd);
 valInputs = inputsNorm(:, valInd);
 valTargets = targets(:, valInd);
 testInputs = inputsNorm(:, testInd);
 testTargets = targets(:, testInd);
-out_name = '22.mat';    
 
-hiddenLayerSize = [16. 16, 16, 16];
+% Neural Network Setup
+hiddenLayerSize = [16, 16, 16, 16];
 net = feedforwardnet(hiddenLayerSize);
 net.layers{1}.transferFcn = 'poslin';
 net.layers{2}.transferFcn = 'poslin';
@@ -61,13 +72,19 @@ net.trainParam.showWindow = true;
 net.trainParam.showCommandLine = false;
 net.performFcn = 'mse';
 
+% Train Network
 [net, tr] = train(net, inputsNorm, targets);
 
+% Evaluation
 testOutputs = net(testInputs);
 testErrors = gsubtract(testTargets, testOutputs);
 testPerformance = perform(net, testTargets, testOutputs);
+
+% Save Results
+out_name = 'results.mat';
 save(out_name, 'net', 'tr', 'testOutputs', 'testErrors', 'testPerformance');
 
+% Load and Evaluate Saved Network
 load(out_name, 'net', 'tr', 'testOutputs', 'testErrors', 'testPerformance');
 
 mseValue = mse(testErrors);
@@ -85,34 +102,40 @@ fprintf('Test Set R-squared (R²): %f\n', r2Value);
 total_parameters = sum(cellfun(@numel, net.IW)) + sum(cellfun(@numel, net.LW)) + sum(cellfun(@numel, net.b));
 fprintf('Number of parameters: %d\n', total_parameters(1));
 
+% Plotting
 figure;
 plotperform(tr);
 title('Performance Plot');
+
 figure;
 plottrainstate(tr);
 title('Training State Plot');
+
 figure;
 ploterrhist(testErrors);
 title('Error Histogram');
+
 figure;
 plotregression(targets, net(inputsNorm));
 title('Regression Plot');
+
 figure;
 plotregression(testTargets, testOutputs);
 title('Test Set Regression Plot');
+
 figure;
 histogram(testErrors);
 title('Test Error Histogram');
 xlabel('Error');
 ylabel('Frequency');
 
-testPredict = net(testInputs);
+% Comparison of Actual and Predicted Values
 numSamples = 100;
 
 figure;
 plot(testTargets(1, 1:numSamples), 'b-', 'LineWidth', 1.5);
 hold on;
-plot(testPredict(1, 1:numSamples), 'r--', 'LineWidth', 1.5);
+plot(testOutputs(1, 1:numSamples), 'r--', 'LineWidth', 1.5);
 title('Comparison of Actual and Predicted Values for u_a_k-1', 'FontSize', 14);
 xlabel('Sample', 'FontSize', 12);
 ylabel('Value', 'FontSize', 12);
@@ -122,7 +145,7 @@ grid on;
 figure;
 plot(testTargets(2, 1:numSamples), 'b-', 'LineWidth', 1.5);
 hold on;
-plot(testPredict(2, 1:numSamples), 'r--', 'LineWidth', 1.5);
+plot(testOutputs(2, 1:numSamples), 'r--', 'LineWidth', 1.5);
 title('Comparison of Actual and Predicted Values for u_b_k-1', 'FontSize', 14);
 xlabel('Sample', 'FontSize', 12);
 ylabel('Value', 'FontSize', 12);
@@ -132,7 +155,7 @@ grid on;
 figure;
 plot(testTargets(3, 1:numSamples), 'b-', 'LineWidth', 1.5);
 hold on;
-plot(testPredict(3, 1:numSamples), 'r--', 'LineWidth', 1.5);
+plot(testOutputs(3, 1:numSamples), 'r--', 'LineWidth', 1.5);
 title('Comparison of Actual and Predicted Values for u_c_k-1', 'FontSize', 14);
 xlabel('Sample', 'FontSize', 12);
 ylabel('Value', 'FontSize', 12);
