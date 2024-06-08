@@ -8,7 +8,7 @@ Precise phase voltage information is crucial for the efficient and accurate cont
 
 ## Dataset
 
-The dataset captures the mean phase voltages for each PWM interval along with other relevant signals across the complete operating range of an exemplary drive system. It is publicly available and can be downloaded from [Kaggle](https://www.kaggle.com/datasets/stender/inverter-data-set/data).
+The data set comprises several sensor data collected from a typical combined system between an inverter, an induction motor, and a control system, deployed on a test bench. It is publicly available and can be downloaded from [Kaggle](https://www.kaggle.com/datasets/stender/inverter-data-set/data).
 
 ## Repository Structure
 
@@ -16,7 +16,7 @@ The dataset captures the mean phase voltages for each PWM interval along with ot
 
 ## Requirements
 
-- MATLAB (R2020b or later)
+- MATLAB (R2023b or later)
 - Deep Learning Toolbox
 
 ## Getting Started
@@ -57,6 +57,10 @@ Contributions are welcome! Please follow these steps to contribute:
 4. Commit your changes (`git commit -m 'Add some feature'`).
 5. Push to the branch (`git push origin feature-branch`).
 6. Open a Pull Request.
+
+## Acknowledgements
+
+We thank the LEA department at Paderborn University for providing the dataset used in this study. Special thanks to Professor Yih-Hua Liu of National Taiwan University of Science and Technology for his expertise and lectures in the "Applications of Power Electronics" course. We also acknowledge the support of the teaching assistants of the course.
 
 ## Contact
 
