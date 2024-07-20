@@ -64,6 +64,11 @@ Contributions are welcome! Please follow these steps to contribute:
 
 We thank the LEA department at Paderborn University for providing the dataset used in this study. Special thanks to Professor Yih-Hua Liu of National Taiwan University of Science and Technology for his expertise and lectures in the "Applications of Power Electronics" course. We also acknowledge the support of the teaching assistants of the course.
 
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
 ## Contact
 
 For any questions or inquiries, please contact us at m11207330@mail.ntust.edu.tw
