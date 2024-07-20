@@ -25,7 +25,7 @@ The data set comprises several sensor data collected from a typical combined sys
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/Shengwei0516/DataDriven-IGBT-Inverter-Modeling.git
+    git clone https://github.com/Shengwei-Peng/DataDriven-IGBT-Inverter-Modeling.git
     ```
 
 2. Navigate to the repository directory:
